@@ -10,6 +10,7 @@ using System.IO;
 
 public class GenerateHeightmap : MonoBehaviour {
     public Terrain Terrain;
+    public RenderTexture RT;
 
     // Width and height of the texture in pixels.
     public int pixWidth;
@@ -83,7 +84,19 @@ public class GenerateHeightmap : MonoBehaviour {
         noiseTex.Apply();
     }
 
-    //void Update () {
-    //    CalcNoise();
-    //}
+    void Update () {
+        if (Input.GetKeyDown(KeyCode.L)) {
+            print("loading a map");
+            LoadHeightmapFromScreenshot();
+        }
+    }
+
+    void LoadHeightmapFromScreenshot() {
+        byte[] bytes = File.ReadAllBytes(Application.dataPath + "/../map.png");
+        Texture2D tex = new Texture2D(512, 512);
+        //tex.LoadRawTextureData(bytes);
+        tex.LoadImage(bytes);
+        Graphics.Blit(tex, RT);
+        UpdateTerrainData(RT);
+    }
 }
