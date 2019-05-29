@@ -330,7 +330,7 @@ MonoBehaviour:
   pixHeight: 512
   xOrg: 0
   yOrg: 0
-  scale: 3
+  scale: 0.5
 --- !u!4 &1724404538
 Transform:
   m_ObjectHideFlags: 0
