@@ -21,6 +21,37 @@ public class SaveToImage : MonoBehaviour
             print("taking a screenshot");
             SaveImage(RTImage(cam));
         }
+
+        if (Input.GetKeyDown("c")) {
+            print("combining images");
+
+            byte[] bytesA = File.ReadAllBytes(Application.dataPath + "/../heightmap.png");
+            Texture2D texA = new Texture2D(512, 512);
+            texA.LoadImage(bytesA);
+            Color[] pixA = texA.GetPixels();
+
+            byte[] bytesB = File.ReadAllBytes(Application.dataPath + "/../map.png");
+            Texture2D texB = new Texture2D(512, 512);
+            texB.LoadImage(bytesB);
+            Color[] pixB = texB.GetPixels();
+
+            HideImageAinB(pixA, pixB);
+        }
+    }
+
+    Texture2D HideImageAinB (Color[] A, Color[] B) {
+
+        int counter = 0;
+        foreach (Color pixel in A) {
+            if (counter >= 10) break;
+            counter++;
+            print(string.Concat(pixel.r, " ", pixel.g, " ", pixel.b, " ", pixel.a, " "));
+            print(pixel);
+        }
+
+
+        Texture2D C = new Texture2D(512, 512);
+        return C;
     }
 
     // Take a "screenshot" of a camera's Render Texture.

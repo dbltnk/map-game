@@ -94,7 +94,6 @@ public class GenerateHeightmap : MonoBehaviour {
     void LoadHeightmapFromScreenshot() {
         byte[] bytes = File.ReadAllBytes(Application.dataPath + "/../map.png");
         Texture2D tex = new Texture2D(512, 512);
-        //tex.LoadRawTextureData(bytes);
         tex.LoadImage(bytes);
         Graphics.Blit(tex, RT);
         UpdateTerrainData(RT);
