@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0568d4a19b1cb5d4c81f8581b60ad947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Terrain: {fileID: 2090860470}
   pixWidth: 512
   pixHeight: 512
   xOrg: 0

@@ -9,6 +9,8 @@ using System.IO;
 // Source: https://docs.unity3d.com/ScriptReference/Mathf.PerlinNoise.html
 
 public class GenerateHeightmap : MonoBehaviour {
+    public Terrain Terrain;
+
     // Width and height of the texture in pixels.
     public int pixWidth;
     public int pixHeight;
@@ -36,6 +38,18 @@ public class GenerateHeightmap : MonoBehaviour {
         CalcNoise();
         byte[] bytes = noiseTex.EncodeToPNG();
         File.WriteAllBytes(Application.dataPath + "/../heightmap.png", bytes);
+
+        RenderTexture rt = new RenderTexture(512, 512, 16, RenderTextureFormat.ARGB32);
+        rt.Create();
+        Graphics.Blit(noiseTex, rt);
+
+        UpdateTerrainData(rt);
+    }
+
+    void UpdateTerrainData (RenderTexture rt) {
+        RectInt rI = new RectInt(0, 0, 512, 512);
+        Vector2Int v2I = new Vector2Int(0, 0);
+        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(rI, v2I, TerrainHeightmapSyncControl.HeightOnly);
     }
 
     void CalcNoise () {
