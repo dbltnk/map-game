@@ -32,6 +32,7 @@ public class MapGenerator : MonoBehaviour {
             print("loading a map");
             SaveToImage.SaveImage(Steganography.RecoverImage(Data.PathCombined, Data.ScreenShotWidth, Data.ScreenShotHeight, Data.BitsHidden, Data.HeightMapWidth, Data.HeightMapHeight), Data.PathRecovered);
             LoadHeightmapFromFile(Data.PathRecovered);
+            Player.GetComponent<ResetToStart>().Reset();
         }
     }
 
