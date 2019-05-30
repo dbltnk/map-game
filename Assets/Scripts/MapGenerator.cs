@@ -12,6 +12,7 @@ using System.IO;
 public class MapGenerator : MonoBehaviour {
     public Terrain Terrain;
     private RenderTexture rT;
+    public GameObject Player;
 
     private void Start () {
         rT = new RenderTexture(Data.HeightMapWidth, Data.HeightMapHeight, 16, RenderTextureFormat.ARGB1555);
@@ -24,6 +25,7 @@ public class MapGenerator : MonoBehaviour {
             Texture2D heightMap = GenerateHeightMap(Data.HeightMapWidth, Data.HeightMapHeight);
             WriteHeightMapToFile(heightMap);
             LoadHeightmapFromFile(Data.PathHeightMap);
+            Player.GetComponent<ResetToStart>().Reset();
         }
 
         if (Input.GetKeyDown(KeyCode.L)) {
