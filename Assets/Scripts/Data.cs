@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Data : MonoBehaviour
 {
-    public static int heightMapWidth = 512;
-    public static int heightMapHeight = 512;
+    public static int HeightMapWidth = 512;
+    public static int HeightMapHeight = 512;
 
-    public static int screenShotWidth = 1024;
-    public static int screenShotHeight = 1024;
+    public static float ScaleMin = 0.1f;
+    public static float ScaleMax = 5f;
 
-    public static string pathHeightMap = "/../1_heightmap.png";
-    public static string pathScreenShot = "/../2_screenshot.png";
-    public static string pathCombined = "/../3_combined.png";
-    public static string pathRecovered = "/../4_recovered.png";
+    public static int ScreenShotWidth = 1024;
+    public static int ScreenShotHeight = 1024;
 
-    public static int bitsHidden = 5;
+    public static string PathHeightMap = "/../1_heightmap.png";
+    public static string PathScreenShot = "/../2_screenshot.png";
+    public static string PathCombined = "/../3_combined.png";
+    public static string PathRecovered = "/../4_recovered.png";
+
+    public static int BitsHidden = 5;
 }
