@@ -19,10 +19,10 @@ public class SaveToImage : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S)) {
             print("taking a screenshot");
-            SaveImage(RTImage(cam), "map");
+            SaveImage(RTImage(cam), "2_screenshot");
 
             print("combining images");
-            SaveImage(Steganography.HideImage("/../map.png", "/../heightmap.png", 5), "combined");
+            SaveImage(Steganography.HideImage("/../2_screenshot.png", "/../1_heightmap.png", 5), "3_combined");
         }
     }
 

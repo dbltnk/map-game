@@ -36,7 +36,7 @@ public class GenerateHeightmap : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.L)) {
             print("loading a map");
-            SaveToImage.SaveImage(Steganography.RecoverImage("/../combined.png", 5, 512, 512), "recovered");
+            SaveToImage.SaveImage(Steganography.RecoverImage("/../3_combined.png", 5, 512, 512), "4_recovered");
             LoadHeightmapFromScreenshot("recovered");
         }
     }
@@ -53,7 +53,7 @@ public class GenerateHeightmap : MonoBehaviour {
 
         CalcNoise();
         byte[] bytes = noiseTex.EncodeToPNG();
-        File.WriteAllBytes(Application.dataPath + "/../heightmap.png", bytes);
+        File.WriteAllBytes(Application.dataPath + "/../1_heightmap.png", bytes);
 
         RenderTexture rt = new RenderTexture(512, 512, 16, RenderTextureFormat.ARGB1555);
         rt.Create();
