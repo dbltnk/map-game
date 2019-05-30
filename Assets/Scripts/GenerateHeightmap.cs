@@ -28,7 +28,20 @@ public class GenerateHeightmap : MonoBehaviour {
     private Color[] pix;
     private Renderer rend;
 
-    void Start () {
+    void Update () {
+        if (Input.GetKeyDown(KeyCode.G)) {
+            print("generating a map");
+            GenerateMap();
+        }
+
+        if (Input.GetKeyDown(KeyCode.L)) {
+            print("loading a map");
+            SaveToImage.SaveImage(Steganography.RecoverImage("/../combined.png", 5, 512, 512), "recovered");
+            LoadHeightmapFromScreenshot("recovered");
+        }
+    }
+
+    void GenerateMap () {
         scale = Random.Range(1f, 3f);
 
         rend = GetComponent<Renderer>();
@@ -42,7 +55,7 @@ public class GenerateHeightmap : MonoBehaviour {
         byte[] bytes = noiseTex.EncodeToPNG();
         File.WriteAllBytes(Application.dataPath + "/../heightmap.png", bytes);
 
-        RenderTexture rt = new RenderTexture(512, 512, 16, RenderTextureFormat.ARGB32);
+        RenderTexture rt = new RenderTexture(512, 512, 16, RenderTextureFormat.ARGB1555);
         rt.Create();
         Graphics.Blit(noiseTex, rt);
         UpdateTerrainData(rt);
@@ -58,9 +71,6 @@ public class GenerateHeightmap : MonoBehaviour {
         // For each pixel in the texture...
         float y = 0.0F;
 
-        //float minV = 0.5f;
-        //float maxV = 0.5f;
-
         while (y < noiseTex.height) {
             float x = 0.0F;
 
@@ -68,31 +78,19 @@ public class GenerateHeightmap : MonoBehaviour {
                 float xCoord = xOrg + x / noiseTex.width * scale;
                 float yCoord = yOrg + y / noiseTex.height * scale;
                 float sample = Mathf.PerlinNoise(xCoord, yCoord) + 0.25f;
-                //if (sample < minV) minV = sample;
-                //if (sample > maxV) maxV = sample;
                 pix[(int)y * noiseTex.width + (int)x] = new Color(sample, sample, sample);
                 x++;
             }
             y++;
         }
 
-        //print(minV);
-        //print(maxV);
-
         // Copy the pixel data to the texture and load it into the GPU.
         noiseTex.SetPixels(pix);
         noiseTex.Apply();
     }
 
-    void Update () {
-        if (Input.GetKeyDown(KeyCode.L)) {
-            print("loading a map");
-            LoadHeightmapFromScreenshot();
-        }
-    }
-
-    void LoadHeightmapFromScreenshot() {
-        byte[] bytes = File.ReadAllBytes(Application.dataPath + "/../map.png");
+    void LoadHeightmapFromScreenshot(string name) {
+        byte[] bytes = File.ReadAllBytes(Application.dataPath + "/../" + name + ".png");
         Texture2D tex = new Texture2D(512, 512);
         tex.LoadImage(bytes);
         Graphics.Blit(tex, RT);

@@ -17,17 +17,12 @@ public class SaveToImage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space")) {
+        if (Input.GetKeyDown(KeyCode.S)) {
             print("taking a screenshot");
             SaveImage(RTImage(cam), "map");
-        }
 
-        if (Input.GetKeyDown("c")) {
             print("combining images");
-
-            //HideImageAinB(pixA, pixB);
-            SaveImage(Steganography.HideImage("/../map.png", "/../heightmap.png", 4), "combined");
-            SaveImage(Steganography.RecoverImage("/../combined.png", 4, 512, 512), "recovered");
+            SaveImage(Steganography.HideImage("/../map.png", "/../heightmap.png", 5), "combined");
         }
     }
 
@@ -52,7 +47,7 @@ public class SaveToImage : MonoBehaviour
         return image;
     }
 
-    void SaveImage(Texture2D tex, string name) {
+    public static void SaveImage(Texture2D tex, string name) {
         byte[] bytes = tex.EncodeToPNG();
         File.WriteAllBytes(Application.dataPath + "/../" + name + ".png", bytes);
     }
