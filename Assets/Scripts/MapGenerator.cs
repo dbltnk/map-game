@@ -41,21 +41,6 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    Texture2D GenerateHeightMap (int width, int height) {
-        Texture2D heightmap = new Texture2D(width, height);
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                float nx = x / width - 0.5f;
-                float ny = y / height - 0.5f;
-                float v = Mathf.PerlinNoise(nx, ny);
-                Color32 c = new Color32((byte)v, (byte)v, (byte)v, 1);
-                heightmap.SetPixels32(x, y, 1, 1, c);
-            }
-        }
-        return heightmap;
-    }
-
     void GenerateMap () {
         scale = Random.Range(1f, 3f);
 
