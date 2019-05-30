@@ -5,8 +5,8 @@ public class Data : MonoBehaviour
     public static int HeightMapWidth = 512;
     public static int HeightMapHeight = 512;
 
-    public static float ScaleMin = 0.1f;
-    public static float ScaleMax = 5f;
+    public static float ScaleMin = 4f;
+    public static float ScaleMax = 7f;
 
     public static int ScreenShotWidth = 1024;
     public static int ScreenShotHeight = 1024;
