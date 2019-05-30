@@ -42,7 +42,7 @@ public class GenerateHeightmap : MonoBehaviour {
         byte[] bytes = noiseTex.EncodeToPNG();
         File.WriteAllBytes(Application.dataPath + "/../heightmap.png", bytes);
 
-        RenderTexture rt = new RenderTexture(512, 512, 16, RenderTextureFormat.Default);
+        RenderTexture rt = new RenderTexture(512, 512, 16, RenderTextureFormat.ARGB32);
         rt.Create();
         Graphics.Blit(noiseTex, rt);
         UpdateTerrainData(rt);
