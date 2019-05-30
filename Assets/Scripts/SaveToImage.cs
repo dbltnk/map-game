@@ -22,7 +22,7 @@ public class SaveToImage : MonoBehaviour
             SaveImage(RTImage(cam), Data.pathScreenShot);
 
             print("combining images");
-            SaveImage(Steganography.HideImage(Data.pathScreenShot, Data.screenShotWidth, Data.screenShotHeight, Data.pathHeightMap, Data.heightMapWidth, Data.heightMapHeight, 5), Data.pathCombined);
+            SaveImage(Steganography.HideImage(Data.pathScreenShot, Data.screenShotWidth, Data.screenShotHeight, Data.pathHeightMap, Data.heightMapWidth, Data.heightMapHeight, Data.bitsHidden), Data.pathCombined);
         }
     }
 

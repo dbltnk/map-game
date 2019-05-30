@@ -14,4 +14,6 @@ public class Data : MonoBehaviour
     public static string pathScreenShot = "/../2_screenshot.png";
     public static string pathCombined = "/../3_combined.png";
     public static string pathRecovered = "/../4_recovered.png";
+
+    public static int bitsHidden = 5;
 }

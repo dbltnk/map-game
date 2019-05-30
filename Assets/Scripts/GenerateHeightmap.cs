@@ -36,7 +36,7 @@ public class GenerateHeightmap : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.L)) {
             print("loading a map");
-            SaveToImage.SaveImage(Steganography.RecoverImage(Data.pathCombined, Data.screenShotWidth, Data.screenShotHeight, 5, Data.heightMapWidth, Data.heightMapHeight), Data.pathRecovered);
+            SaveToImage.SaveImage(Steganography.RecoverImage(Data.pathCombined, Data.screenShotWidth, Data.screenShotHeight, Data.bitsHidden, Data.heightMapWidth, Data.heightMapHeight), Data.pathRecovered);
             LoadHeightmapFromScreenshot(Data.pathRecovered);
         }
     }
