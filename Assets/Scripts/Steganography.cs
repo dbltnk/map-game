@@ -7,14 +7,14 @@ public class Steganography : MonoBehaviour
 {
     // Hide bm_hidden inside bm_visible and return the result.
     // Source: http://csharphelper.com/blog/2016/09/use-steganography-to-hide-one-picture-inside-another-in-c/
-    public static Texture2D HideImage (string path_visible, string path_hidden, int hidden_bits) {
+    public static Texture2D HideImage (string path_visible, int width_visible, int height_visible, string path_hidden, int width_hidden, int height_hidden, int hidden_bits) {
         byte[] bytesVisible = File.ReadAllBytes(Application.dataPath + path_visible);
-        Texture2D texVisible = new Texture2D(1024, 1024);
+        Texture2D texVisible = new Texture2D(width_visible, height_visible);
         texVisible.LoadImage(bytesVisible);
         Color32[] pixVisible = texVisible.GetPixels32();
 
         byte[] bytesHidden = File.ReadAllBytes(Application.dataPath + path_hidden);
-        Texture2D texHidden = new Texture2D(512, 512);
+        Texture2D texHidden = new Texture2D(width_hidden, height_hidden);
         texHidden.LoadImage(bytesHidden);
         Color32[] pixHidden = texHidden.GetPixels32();
 
@@ -54,15 +54,15 @@ public class Steganography : MonoBehaviour
 
     // Recover a hidden image.
     // Source: http://csharphelper.com/blog/2016/09/use-steganography-to-hide-one-picture-inside-another-in-c/
-    public static Texture2D RecoverImage (string path_combined, int hidden_bits, int picHiddenWidth, int picHiddenHeight) {
+    public static Texture2D RecoverImage (string path_combined, int width_visible, int height_visible, int hidden_bits, int width_hidden, int height_hidden) {
         byte[] bytesCombined = File.ReadAllBytes(Application.dataPath + path_combined);
-        Texture2D texCombined = new Texture2D(1024, 1024);
+        Texture2D texCombined = new Texture2D(width_visible, height_visible);
         texCombined.LoadImage(bytesCombined);
         Color32[] pixCombined = texCombined.GetPixels32();
 
         int shift = (8 - hidden_bits);
         int hidden_mask = 0xFF >> shift;
-        Color32[] pixRecovered = new Color32[picHiddenWidth * picHiddenHeight];
+        Color32[] pixRecovered = new Color32[width_hidden * height_hidden];
 
         for (int x = 0; x < pixCombined.Length; x++) {
 
@@ -79,7 +79,7 @@ public class Steganography : MonoBehaviour
                 pixRecovered[x] = new Color32((byte)r, (byte)g, (byte)b, (byte)a);
             }
         }
-        Texture2D texRecovered = new Texture2D(picHiddenWidth, picHiddenHeight);
+        Texture2D texRecovered = new Texture2D(width_hidden, height_hidden);
         texRecovered.SetPixels32(pixRecovered);
 
         return texRecovered;

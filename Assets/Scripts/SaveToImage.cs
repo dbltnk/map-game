@@ -19,10 +19,10 @@ public class SaveToImage : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S)) {
             print("taking a screenshot");
-            SaveImage(RTImage(cam), "2_screenshot");
+            SaveImage(RTImage(cam), Data.pathScreenShot);
 
             print("combining images");
-            SaveImage(Steganography.HideImage("/../2_screenshot.png", "/../1_heightmap.png", 5), "3_combined");
+            SaveImage(Steganography.HideImage(Data.pathScreenShot, Data.screenShotWidth, Data.screenShotHeight, Data.pathHeightMap, Data.heightMapWidth, Data.heightMapHeight, 5), Data.pathCombined);
         }
     }
 
@@ -47,8 +47,8 @@ public class SaveToImage : MonoBehaviour
         return image;
     }
 
-    public static void SaveImage(Texture2D tex, string name) {
+    public static void SaveImage(Texture2D tex, string path) {
         byte[] bytes = tex.EncodeToPNG();
-        File.WriteAllBytes(Application.dataPath + "/../" + name + ".png", bytes);
+        File.WriteAllBytes(Application.dataPath + path, bytes);
     }
 }

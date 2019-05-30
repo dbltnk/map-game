@@ -36,8 +36,8 @@ public class GenerateHeightmap : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.L)) {
             print("loading a map");
-            SaveToImage.SaveImage(Steganography.RecoverImage("/../3_combined.png", 5, 512, 512), "4_recovered");
-            LoadHeightmapFromScreenshot("4_recovered");
+            SaveToImage.SaveImage(Steganography.RecoverImage(Data.pathCombined, Data.screenShotWidth, Data.screenShotHeight, 5, Data.heightMapWidth, Data.heightMapHeight), Data.pathRecovered);
+            LoadHeightmapFromScreenshot(Data.pathRecovered);
         }
     }
 
@@ -53,16 +53,16 @@ public class GenerateHeightmap : MonoBehaviour {
 
         CalcNoise();
         byte[] bytes = noiseTex.EncodeToPNG();
-        File.WriteAllBytes(Application.dataPath + "/../1_heightmap.png", bytes);
+        File.WriteAllBytes(Application.dataPath + Data.pathHeightMap, bytes);
 
-        RenderTexture rt = new RenderTexture(512, 512, 16, RenderTextureFormat.ARGB1555);
+        RenderTexture rt = new RenderTexture(Data.heightMapWidth, Data.heightMapHeight, 16, RenderTextureFormat.ARGB1555);
         rt.Create();
         Graphics.Blit(noiseTex, rt);
         UpdateTerrainData(rt);
     }
 
     void UpdateTerrainData (RenderTexture rt) {
-        RectInt rI = new RectInt(0, 0, 512, 512);
+        RectInt rI = new RectInt(0, 0, Data.heightMapWidth, Data.heightMapHeight);
         Vector2Int v2I = new Vector2Int(0, 0);
         Terrain.terrainData.CopyActiveRenderTextureToHeightmap(rI, v2I, TerrainHeightmapSyncControl.HeightOnly);
     }
@@ -89,9 +89,9 @@ public class GenerateHeightmap : MonoBehaviour {
         noiseTex.Apply();
     }
 
-    void LoadHeightmapFromScreenshot(string name) {
-        byte[] bytes = File.ReadAllBytes(Application.dataPath + "/../" + name + ".png");
-        Texture2D tex = new Texture2D(512, 512);
+    void LoadHeightmapFromScreenshot(string path) {
+        byte[] bytes = File.ReadAllBytes(Application.dataPath + path);
+        Texture2D tex = new Texture2D(Data.heightMapWidth, Data.heightMapHeight);
         tex.LoadImage(bytes);
         Graphics.Blit(tex, RT);
         UpdateTerrainData(RT);
