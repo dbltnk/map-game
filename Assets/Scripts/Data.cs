@@ -21,6 +21,12 @@ public class Data : MonoBehaviour
     public static string PathScreenShot = "/../2_screenshot.png";
     public static string PathCombined = "/../3_combined.png";
     public static string PathRecovered = "/../4_recovered.png";
+    public static string PathVisited = "/../5_visited.png";
+
+    public static Color ColorUnexplored = new Color(0, 0, 0, 1);
+    public static Color ColorVisited = new Color(0, 0, 0, 0);
+
+    public static int RangeSight = 20;
 
     public static int BitsHidden = 5;
 
