@@ -14,7 +14,7 @@ public class ResetToStart : MonoBehaviour
     {
         this.GetComponent<CharacterController>().enabled = false;
         RaycastHit hitInfo;
-        Physics.Raycast(posStart.transform.position, Vector3.down, out hitInfo, float.PositiveInfinity,
+        Physics.SphereCast(posStart.transform.position, 6f, Vector3.down, out hitInfo, float.PositiveInfinity,
                         Physics.AllLayers, QueryTriggerInteraction.Ignore);
         transform.position = hitInfo.point;
         this.GetComponent<CharacterController>().enabled = true;
