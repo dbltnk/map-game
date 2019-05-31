@@ -5,24 +5,20 @@ using UnityEngine;
 public class PlayerPosition : MonoBehaviour
 {
     public GameObject Player;
-    Texture2D visitedTex;
+    public Texture2D VisitedTex;
 
     private void Start () {
-        visitedTex = new Texture2D((int)Data.HeightMapWidth, (int)Data.HeightMapHeight);
+        VisitedTex = new Texture2D((int)Data.HeightMapWidth, (int)Data.HeightMapHeight);
 
-        for (int y = 0; y < visitedTex.height; y++) {
-            for (int x = 0; x < visitedTex.width; x++) {
-                visitedTex.SetPixel(x, y, Data.ColorUnexplored);
+        for (int y = 0; y < VisitedTex.height; y++) {
+            for (int x = 0; x < VisitedTex.width; x++) {
+                VisitedTex.SetPixel(x, y, Data.ColorUnexplored);
             }
         }
-        visitedTex.Apply();
+        VisitedTex.Apply();
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.M)) {
-            print("saving visited map");
-            SaveToImage.SaveImage(visitedTex, Data.PathVisited);
-        }
         MovePlayerMarker();
         UpdateVisitedTexture();
     }
@@ -30,15 +26,14 @@ public class PlayerPosition : MonoBehaviour
     private void UpdateVisitedTexture () {
         float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, 0, Data.HeightMapWidth);
         float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, 0, Data.HeightMapHeight);
-        //visitedTex.SetPixel((int)pX, (int)pZ, Data.ColorVisited);
 
         for (int y = (int)pZ - Data.RangeSight/2 ; y < (int)pZ + Data.RangeSight/2; y++) {
             for (int x = (int)pX - Data.RangeSight/2; x < (int)pX + Data.RangeSight/2; x++) {
-                visitedTex.SetPixel(x, y, Data.ColorVisited);
+                VisitedTex.SetPixel(x, y, Data.ColorVisited);
             }
         }
 
-        visitedTex.Apply();
+        VisitedTex.Apply();
     }
 
     private void MovePlayerMarker () {

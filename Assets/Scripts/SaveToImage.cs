@@ -7,23 +7,63 @@ public class SaveToImage : MonoBehaviour
 
 {
     Camera cam;
+    public GameObject mapMarker;
+    PlayerPosition pPos;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
+        pPos = mapMarker.GetComponent<PlayerPosition>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.S)) {
-            print("taking a screenshot");
+            print("saving a picture of the map");
             SaveImage(RTImage(cam), Data.PathScreenShot);
 
-            print("combining images");
+            print("saving visited map");
+            SaveImage(pPos.VisitedTex, Data.PathVisited);
+
+            print("overriding visited information");
+            SaveImage(OverrideVisited(Data.PathScreenShot, Data.PathVisited), Data.PathOverriden);
+
+            print("adding height map");
             SaveImage(Steganography.HideImage(Data.PathScreenShot, Data.ScreenShotWidth, Data.ScreenShotHeight, Data.PathHeightMap, Data.HeightMapWidth, Data.HeightMapHeight, Data.BitsHidden), Data.PathCombined);
         }
+    }
+
+    Texture2D OverrideVisited(string pathScreenshot, string pathVisited) {
+
+        // THIS NEEDS T GO FROM A 512 MAP TO A 1024 MAP
+
+
+        Texture2D texMerged = new Texture2D(Data.ScreenShotWidth, Data.ScreenShotHeight);
+        Color32[] pixMerged = texMerged.GetPixels32();
+
+        byte[] bytesOriginal = File.ReadAllBytes(Application.dataPath + pathScreenshot);
+        Texture2D texOriginal = new Texture2D(Data.ScreenShotWidth, Data.ScreenShotHeight);
+        texOriginal.LoadImage(bytesOriginal);
+        Color32[] pixOriginal = texOriginal.GetPixels32();
+
+        byte[] bytesVisited = File.ReadAllBytes(Application.dataPath + pathVisited);
+        Texture2D texVisited = new Texture2D(Data.ScreenShotWidth, Data.ScreenShotHeight);
+        texVisited.LoadImage(bytesVisited);
+        Color32[] pixVisited = texVisited.GetPixels32();
+
+        for (int i = 0; i < pixVisited.Length; i++) {
+            if (pixVisited[i] == Data.ColorUnexplored) {
+                pixMerged[i] = Data.ColorUnexplored;
+            }
+            else {
+                pixMerged[i] = pixOriginal[i];
+            }
+        }
+
+        texMerged.SetPixels32(pixMerged);
+        return texMerged;
     }
 
     // Take a "screenshot" of a camera's Render Texture.
