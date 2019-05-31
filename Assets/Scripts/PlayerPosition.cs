@@ -24,8 +24,8 @@ public class PlayerPosition : MonoBehaviour
     }
 
     private void UpdateVisitedTexture () {
-        float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, 0, Data.HeightMapWidth);
-        float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, 0, Data.HeightMapHeight);
+        float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, 0, VisitedTex.width);
+        float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, 0, VisitedTex.height);
 
         for (int y = (int)pZ - Data.RangeSight/2 ; y < (int)pZ + Data.RangeSight/2; y++) {
             for (int x = (int)pX - Data.RangeSight/2; x < (int)pX + Data.RangeSight/2; x++) {
@@ -37,8 +37,8 @@ public class PlayerPosition : MonoBehaviour
     }
 
     private void MovePlayerMarker () {
-        float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, -1f * Data.MiniMapWidth / 2, Data.MiniMapWidth / 2);
-        float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, -1f * Data.MiniMapHeight / 2, Data.MiniMapHeight / 2);
+        float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, -1f * VisitedTex.width / 2, VisitedTex.width / 2);
+        float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, -1f * VisitedTex.height / 2, VisitedTex.height / 2);
         gameObject.transform.localPosition = new Vector3(pX, pZ, 0f);
     }
 }

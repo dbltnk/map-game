@@ -28,22 +28,17 @@ public class SaveToImage : MonoBehaviour
             SaveImage(pPos.VisitedTex, Data.PathVisited);
 
             print("overriding visited information");
-            SaveImage(OverrideVisited(Data.PathScreenShot, Data.PathVisited), Data.PathOverriden);
+            SaveImage(OverrideVisited(Data.PathHeightMap, Data.PathVisited), Data.PathHeightOverriden);
+            SaveImage(OverrideVisited(Data.PathScreenShot, Data.PathVisited), Data.PathScreenOverriden);
 
             print("adding height map");
-            SaveImage(Steganography.HideImage(Data.PathScreenShot, Data.ScreenShotWidth, Data.ScreenShotHeight, Data.PathHeightMap, Data.HeightMapWidth, Data.HeightMapHeight, Data.BitsHidden), Data.PathCombined);
+            SaveImage(Steganography.HideImage(Data.PathScreenOverriden, Data.ScreenShotWidth, Data.ScreenShotHeight, Data.PathHeightOverriden, Data.HeightMapWidth, Data.HeightMapHeight, Data.BitsHidden), Data.PathCombined);
         }
     }
 
-    Texture2D OverrideVisited(string pathScreenshot, string pathVisited) {
+    Texture2D OverrideVisited(string pathOriginal, string pathVisited) {
 
-        // THIS NEEDS T GO FROM A 512 MAP TO A 1024 MAP
-
-
-        Texture2D texMerged = new Texture2D(Data.ScreenShotWidth, Data.ScreenShotHeight);
-        Color32[] pixMerged = texMerged.GetPixels32();
-
-        byte[] bytesOriginal = File.ReadAllBytes(Application.dataPath + pathScreenshot);
+        byte[] bytesOriginal = File.ReadAllBytes(Application.dataPath + pathOriginal);
         Texture2D texOriginal = new Texture2D(Data.ScreenShotWidth, Data.ScreenShotHeight);
         texOriginal.LoadImage(bytesOriginal);
         Color32[] pixOriginal = texOriginal.GetPixels32();
@@ -53,12 +48,30 @@ public class SaveToImage : MonoBehaviour
         texVisited.LoadImage(bytesVisited);
         Color32[] pixVisited = texVisited.GetPixels32();
 
-        for (int i = 0; i < pixVisited.Length; i++) {
-            if (pixVisited[i] == Data.ColorUnexplored) {
-                pixMerged[i] = Data.ColorUnexplored;
+        Texture2D texMerged = new Texture2D(texOriginal.width, texOriginal.height);
+        Color32[] pixMerged = texMerged.GetPixels32();
+
+        float sizeFactor = pixOriginal.Length / pixVisited.Length;
+
+        if (sizeFactor == 1f) {
+            for (int i = 0; i < pixVisited.Length; i++) {
+                if (pixVisited[i] == Data.ColorUnexplored) {
+                    pixMerged[i] = Data.ColorUnexplored;
+                } else {
+                    pixMerged[i] = pixOriginal[i];
+                }
             }
-            else {
-                pixMerged[i] = pixOriginal[i];
+        }
+        else {
+            for (int s = 0; s<sizeFactor; s++) {
+                for (int i = 0; i < pixVisited.Length; i++) {
+                    if (pixVisited[i] == Data.ColorUnexplored) {
+                        pixMerged[i + s] = Data.ColorUnexplored;
+                    }
+                    else {
+                        pixMerged[i + s] = pixOriginal[i + s];
+                    }
+                }
             }
         }
 

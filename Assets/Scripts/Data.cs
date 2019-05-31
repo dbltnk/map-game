@@ -19,15 +19,16 @@ public class Data : MonoBehaviour
 
     public static string PathHeightMap = "/../1_heightmap.png";
     public static string PathScreenShot = "/../2_screenshot.png";
-    public static string PathCombined = "/../3_combined.png";
-    public static string PathRecovered = "/../4_recovered.png";
-    public static string PathVisited = "/../5_visited.png";
-    public static string PathOverriden = "/../6_overriden.png";
+    public static string PathVisited = "/../3_visited.png";
+    public static string PathHeightOverriden = "/../4_heightmap_overriden.png";
+    public static string PathScreenOverriden = "/../5_screenshot_overriden.png";
+    public static string PathCombined = "/../6_combined.png";
+    public static string PathRecovered = "/../7_recovered.png";
 
     public static Color ColorUnexplored = new Color(0, 0, 0, 1);
     public static Color ColorVisited = new Color(0, 0, 0, 0);
 
-    public static int RangeSight = 20;
+    public static int RangeSight = 30;
 
     public static int BitsHidden = 5;
 
