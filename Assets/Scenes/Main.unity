@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.041883156, g: 0.03918097, b: 0.04435149, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -51,8 +51,8 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
@@ -96,7 +96,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: afdca7ebdd3e77b40adecf5737168c37,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -226,8 +227,8 @@ GameObject:
   m_Component:
   - component: {fileID: 421508244}
   - component: {fileID: 421508247}
-  - component: {fileID: 421508246}
   - component: {fileID: 421508245}
+  - component: {fileID: 421508246}
   m_Layer: 5
   m_Name: minimap-bg
   m_TagString: Untagged
@@ -1233,6 +1234,7 @@ GameObject:
   - component: {fileID: 2090860471}
   - component: {fileID: 2090860470}
   - component: {fileID: 2090860469}
+  - component: {fileID: 2090860472}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -1258,7 +1260,7 @@ Terrain:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2090860468}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_TerrainData: {fileID: 15600000, guid: 79b76013971a2dc4c9d5ffdf6960fd0f, type: 2}
   m_TreeDistance: 5000
@@ -1302,3 +1304,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2090860472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090860468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a0b7875a668b347beb468ba2ad7e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
