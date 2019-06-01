@@ -7,7 +7,7 @@ public class PlayerPosition : MonoBehaviour
     public GameObject Player;
     public Texture2D VisitedTex;
 
-    private void Start () {
+    void Start () {
         VisitedTex = new Texture2D((int)Data.HeightMapWidth, (int)Data.HeightMapHeight);
 
         for (int y = 0; y < VisitedTex.height; y++) {
@@ -16,14 +16,14 @@ public class PlayerPosition : MonoBehaviour
             }
         }
         VisitedTex.Apply();
+        StartCoroutine("UpdateVisitedTexture");
     }
 
     void Update() {
         MovePlayerMarker();
-        UpdateVisitedTexture();
     }
 
-    private void UpdateVisitedTexture () {
+    IEnumerator UpdateVisitedTexture () {
         float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, 0, VisitedTex.width);
         float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, 0, VisitedTex.height);
 
@@ -32,13 +32,14 @@ public class PlayerPosition : MonoBehaviour
                 VisitedTex.SetPixel(x, y, Data.ColorVisited);
             }
         }
-
         VisitedTex.Apply();
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine("UpdateVisitedTexture");
     }
 
-    private void MovePlayerMarker () {
-        float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, -1f * VisitedTex.width / 2, VisitedTex.width / 2);
-        float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, -1f * VisitedTex.height / 2, VisitedTex.height / 2);
+    void MovePlayerMarker () {
+        float pX = Data.MapIntoRange(Player.transform.position.x, 0, Data.TerrainWidth, -1f * Data.MiniMapWidth / 2f, Data.MiniMapWidth / 2f);
+        float pZ = Data.MapIntoRange(Player.transform.position.z, 0, Data.TerrainHeight, -1f * Data.MiniMapHeight / 2f, Data.MiniMapHeight / 2f);
         gameObject.transform.localPosition = new Vector3(pX, pZ, 0f);
     }
 }

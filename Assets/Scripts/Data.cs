@@ -2,8 +2,8 @@
 
 public class Data : MonoBehaviour
 {
-    public static int HeightMapWidth = 512;
-    public static int HeightMapHeight = 512;
+    public static int HeightMapWidth = 1024;
+    public static int HeightMapHeight = 1024;
 
     public static float ScaleMin = 4f;
     public static float ScaleMax = 7f;
@@ -28,7 +28,7 @@ public class Data : MonoBehaviour
     public static Color ColorUnexplored = new Color(0, 0, 0, 1);
     public static Color ColorVisited = new Color(0, 0, 0, 0);
 
-    public static int RangeSight = 30;
+    public static int RangeSight = 64;
 
     public static int BitsHidden = 5;
 
