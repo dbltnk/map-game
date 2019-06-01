@@ -69,7 +69,7 @@ public class MapGenerator : MonoBehaviour {
     void UpdateTerrainData (RenderTexture rt) {
         RectInt rI = new RectInt(0, 0, Data.HeightMapWidth, Data.HeightMapHeight);
         Vector2Int v2I = new Vector2Int(0, 0);
-        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(rI, v2I, TerrainHeightmapSyncControl.HeightOnly);
+        Terrain.terrainData.CopyActiveRenderTextureToHeightmap(rI, v2I, TerrainHeightmapSyncControl.HeightAndLod);
     }
     
     void LoadHeightmapFromFile(string path) {
