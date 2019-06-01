@@ -8,17 +8,20 @@ public class SetVisitedMap : MonoBehaviour
     public GameObject mapMarker;
     Image img;
     PlayerPosition pP;
+    Sprite overrideSprite;
 
     // Start is called before the first frame update
     void Start()
     {
         img = GetComponent<Image>();
         pP = mapMarker.GetComponent<PlayerPosition>();
+        overrideSprite = Sprite.Create(pP.VisitedTex, new Rect(0.0f, 0.0f, pP.VisitedTex.width, pP.VisitedTex.height), new Vector2(0.5f, 0.5f), 1.0f);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        img.overrideSprite = Sprite.Create(pP.VisitedTex, new Rect(0.0f, 0.0f, pP.VisitedTex.width, pP.VisitedTex.height), new Vector2(0.5f, 0.5f), 1.0f);
+        img.overrideSprite = overrideSprite;
     }
 }
