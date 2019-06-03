@@ -7,25 +7,25 @@ public class SaveToImage : MonoBehaviour
 
 {
     Camera cam;
-    public GameObject mapMarker;
-    PlayerPosition pPos;
+    public GameObject MapGenGO;
+    VisitedMapManager vMM;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
-        pPos = mapMarker.GetComponent<PlayerPosition>();
+        vMM = MapGenGO.GetComponent<VisitedMapManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S)) {
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
             print("saving a picture of the map");
             SaveImage(RTImage(cam), Data.PathScreenShot);
 
             print("saving visited map");
-            SaveImage(pPos.VisitedTex, Data.PathVisited);
+            SaveImage(vMM.VisitedTex, Data.PathVisited);
 
             print("overriding visited information");
             SaveImage(OverrideVisited(Data.PathHeightMap, Data.PathVisited), Data.PathHeightOverriden);

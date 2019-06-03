@@ -14,27 +14,30 @@ public class MapGenerator : MonoBehaviour {
     private RenderTexture rT;
     public GameObject Player;
     public GameObject mapMarker;
+    VisitedMapManager vMM;
 
     private void Start () {
+        vMM = GetComponent<VisitedMapManager>();
         rT = new RenderTexture(Data.HeightMapWidth, Data.HeightMapHeight, 16, RenderTextureFormat.ARGB1555);
         rT.Create();
     }
 
     void Update () {
-        if (Input.GetKeyDown(KeyCode.G)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
             print("generating a map");
             Texture2D heightMap = GenerateHeightMap(Data.HeightMapWidth, Data.HeightMapHeight);
             WriteHeightMapToFile(heightMap);
             LoadHeightmapFromFile(Data.PathHeightMap);
             Player.GetComponent<ResetToStart>().Reset();
-            mapMarker.GetComponent<PlayerPosition>().ClearVisitedTex();
+            vMM.ClearVisitedTex();
         }
 
-        if (Input.GetKeyDown(KeyCode.L)) {
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
             print("loading a map");
             SaveToImage.SaveImage(Steganography.RecoverImage(Data.PathCombined, Data.ScreenShotWidth, Data.ScreenShotHeight, Data.BitsHidden, Data.HeightMapWidth, Data.HeightMapHeight), Data.PathRecovered);
             LoadHeightmapFromFile(Data.PathRecovered);
             Player.GetComponent<ResetToStart>().Reset();
+            vMM.ClearVisitedTex();
         }
     }
 
