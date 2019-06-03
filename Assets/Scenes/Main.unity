@@ -1167,6 +1167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Terrain: {fileID: 2090860470}
   Player: {fileID: 507958152}
+  mapMarker: {fileID: 1729426716}
 --- !u!4 &1724404538
 Transform:
   m_ObjectHideFlags: 0

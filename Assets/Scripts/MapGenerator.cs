@@ -13,6 +13,7 @@ public class MapGenerator : MonoBehaviour {
     public Terrain Terrain;
     private RenderTexture rT;
     public GameObject Player;
+    public GameObject mapMarker;
 
     private void Start () {
         rT = new RenderTexture(Data.HeightMapWidth, Data.HeightMapHeight, 16, RenderTextureFormat.ARGB1555);
@@ -26,6 +27,7 @@ public class MapGenerator : MonoBehaviour {
             WriteHeightMapToFile(heightMap);
             LoadHeightmapFromFile(Data.PathHeightMap);
             Player.GetComponent<ResetToStart>().Reset();
+            mapMarker.GetComponent<PlayerPosition>().ClearVisitedTex();
         }
 
         if (Input.GetKeyDown(KeyCode.L)) {

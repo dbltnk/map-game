@@ -9,14 +9,17 @@ public class PlayerPosition : MonoBehaviour
 
     void Start () {
         VisitedTex = new Texture2D((int)Data.HeightMapWidth, (int)Data.HeightMapHeight);
+        ClearVisitedTex();
+        StartCoroutine("UpdateVisitedTexture");
+    }
 
+    public void ClearVisitedTex () {
         for (int y = 0; y < VisitedTex.height; y++) {
             for (int x = 0; x < VisitedTex.width; x++) {
                 VisitedTex.SetPixel(x, y, Data.ColorUnexplored);
             }
         }
         VisitedTex.Apply();
-        StartCoroutine("UpdateVisitedTexture");
     }
 
     void Update() {
