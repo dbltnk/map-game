@@ -15,9 +15,11 @@ public class MapGenerator : MonoBehaviour {
     public GameObject Player;
     public GameObject mapMarker;
     VisitedMapManager vMM;
+    WorldObjectManager wOM;
 
     private void Start () {
         vMM = GetComponent<VisitedMapManager>();
+        wOM = GetComponent<WorldObjectManager>();
         rT = new RenderTexture(Data.HeightMapWidth, Data.HeightMapHeight, 16, RenderTextureFormat.ARGB1555);
         rT.Create();
     }
@@ -30,6 +32,7 @@ public class MapGenerator : MonoBehaviour {
             LoadHeightmapFromFile(Data.PathHeightMap);
             Player.GetComponent<ResetToStart>().Reset();
             vMM.ClearVisitedTex();
+            wOM.ClearWOTex();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3)) {

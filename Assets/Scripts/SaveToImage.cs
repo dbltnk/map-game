@@ -9,12 +9,14 @@ public class SaveToImage : MonoBehaviour
     Camera cam;
     public GameObject MapGenGO;
     VisitedMapManager vMM;
+    WorldObjectManager wOM;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
         vMM = MapGenGO.GetComponent<VisitedMapManager>();
+        wOM = GetComponent<WorldObjectManager>();
     }
 
     // Update is called once per frame
@@ -23,6 +25,15 @@ public class SaveToImage : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
             print("saving a picture of the map");
             SaveImage(RTImage(cam), Data.PathScreenShot);
+
+            print("saving world object map");
+            wOM.UpdateWOTex();
+            SaveToImage.SaveImage(wOM.wOTex, Data.PathWOMap);
+
+            print("merging world object map into heightmap");
+            // make generic version of OverrideVisited
+            // use it
+            // later do the loading stuff
 
             print("saving visited map");
             SaveImage(vMM.VisitedTex, Data.PathVisited);
