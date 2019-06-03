@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 
 public class WorldObjectManager : MonoBehaviour
 {
@@ -26,10 +27,22 @@ public class WorldObjectManager : MonoBehaviour
         wOTex.Apply();
     }
 
+    public void RemoveAllWO () {
+        foreach (GameObject wO in WorldObjects) {
+            Destroy(wO);
+        }
+    }
+
     Tuple<int, int> GetMapPixelForObject (GameObject gO) {
         int x = Mathf.RoundToInt(Data.MapIntoRange(gO.transform.position.x, 0, Data.TerrainWidth, 0, wOTex.width));
         int y = Mathf.RoundToInt(Data.MapIntoRange(gO.transform.position.z, 0, Data.TerrainWidth, 0, wOTex.width));
         return Tuple.Create(x, y);
+    }
+
+    Vector3 GetPositionFromMapPixel (int x, int y) {
+        int nX = Mathf.RoundToInt(Data.MapIntoRange(x, 0, wOTex.width, 0, Data.TerrainWidth));
+        int nZ = Mathf.RoundToInt(Data.MapIntoRange(y, 0, wOTex.width, 0, Data.TerrainWidth));
+        return new Vector3(nX, 0f, nZ);
     }
 
     public void UpdateWOTex () {
@@ -62,5 +75,21 @@ public class WorldObjectManager : MonoBehaviour
 
         GameObject go = Instantiate(PrefWO, spawnPos, Player.transform.rotation);
         WorldObjects.Add(go);
+    }
+
+    public void LoadWOFromFile (string path) {
+        byte[] bytesWorldObjects = File.ReadAllBytes(Application.dataPath + path);
+        Texture2D texWorldObjects = new Texture2D(Data.HeightMapWidth, Data.HeightMapHeight);
+        texWorldObjects.LoadImage(bytesWorldObjects);
+        Color32[] pixWorldObjects = texWorldObjects.GetPixels32();
+
+        for (int x = 0; x < texWorldObjects.width; x++) {
+            for (int y = 0; y < texWorldObjects.height; y++) {
+                if (texWorldObjects.GetPixel(x, y).a == Data.WO1Alpha) {
+                    GameObject go = Instantiate(PrefWO, GetPositionFromMapPixel(x, y), Player.transform.rotation);
+                    WorldObjects.Add(go);
+                }
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ public class SaveToImage : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         vMM = MapGenGO.GetComponent<VisitedMapManager>();
-        wOM = GetComponent<WorldObjectManager>();
+        wOM = MapGenGO.GetComponent<WorldObjectManager>();
     }
 
     // Update is called once per frame
@@ -31,9 +31,7 @@ public class SaveToImage : MonoBehaviour
             SaveToImage.SaveImage(wOM.wOTex, Data.PathWOMap);
 
             print("merging world object map into heightmap");
-            // make generic version of OverrideVisited
-            // use it
-            // later do the loading stuff
+            AddWorldObjectsToHeightMap();
 
             print("saving visited map");
             SaveImage(vMM.VisitedTex, Data.PathVisited);
@@ -45,6 +43,35 @@ public class SaveToImage : MonoBehaviour
             print("adding height map");
             SaveImage(Steganography.HideImage(Data.PathScreenOverriden, Data.ScreenShotWidth, Data.ScreenShotHeight, Data.PathHeightOverriden, Data.HeightMapWidth, Data.HeightMapHeight, Data.BitsHidden), Data.PathCombined);
         }
+    }
+
+    void AddWorldObjectsToHeightMap () {
+        byte[] bytesWorldObjects = File.ReadAllBytes(Application.dataPath + Data.PathWOMap);
+        Texture2D texWorldObjects = new Texture2D(Data.HeightMapWidth, Data.HeightMapHeight);
+        texWorldObjects.LoadImage(bytesWorldObjects);
+        Color32[] pixWorldObjects = texWorldObjects.GetPixels32();
+
+        byte[] bytesHeightMap = File.ReadAllBytes(Application.dataPath + Data.PathHeightMap);
+        Texture2D texHeightMap = new Texture2D(Data.HeightMapWidth, Data.HeightMapHeight);
+        texHeightMap.LoadImage(bytesHeightMap);
+        Color32[] pixHeightMap = texHeightMap.GetPixels32();
+
+        Texture2D texMerged = new Texture2D(texWorldObjects.width, texWorldObjects.height);
+        Color32[] pixMerged = texMerged.GetPixels32();
+
+        for (int i = 0; i < pixWorldObjects.Length; i++) {
+            Color d = Data.ColorWO1;
+            Color32 c = new Color32((byte)d.r, (byte)d.g, (byte)d.b, (byte)d.a);
+            if (pixWorldObjects[i].r == c.r && pixWorldObjects[i].g == c.g && pixWorldObjects[i].b == c.b && pixWorldObjects[i].a == c.a) {
+                pixMerged[i].a = (byte)Data.WO1Alpha;
+            }
+            else {
+
+            }
+            
+        }
+
+        SaveImage(texMerged, Data.PathHeightMapWithObjects);
     }
 
     Texture2D OverrideVisited(string pathOriginal, string pathVisited) {

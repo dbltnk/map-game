@@ -19,18 +19,20 @@ public class Data : MonoBehaviour
 
     public static string PathHeightMap = "/../1_heightmap.png";
     public static string PathWOMap = "/../2_world_objects.png";
-    public static string PathScreenShot = "/../3_screenshot.png";
-    public static string PathVisited = "/../4_visited.png";
-    public static string PathHeightOverriden = "/../5_heightmap_overriden.png";
-    public static string PathScreenOverriden = "/../6_screenshot_overriden.png";
-    public static string PathCombined = "/../7_combined.png";
-    public static string PathRecovered = "/../8_recovered.png";
+    public static string PathHeightMapWithObjects = "/../3_heightmap_with_objects.png";
+    public static string PathScreenShot = "/../4_screenshot.png";
+    public static string PathVisited = "/../5_visited.png";
+    public static string PathHeightOverriden = "/../6_heightmap_overriden.png";
+    public static string PathScreenOverriden = "/../7_screenshot_overriden.png";
+    public static string PathCombined = "/../8_combined.png";
+    public static string PathRecovered = "/../9_recovered.png";
 
-    public static Color ColorUnexplored = new Color(0, 0, 0, 1);
-    public static Color ColorVisited = new Color(0, 0, 0, 0);
+    public static Color ColorUnexplored = new Color(0, 0, 1f, 1f);
+    public static Color ColorVisited = new Color(1f, 0, 0, 1f);
 
-    public static Color ColorWONone = new Color(0, 0, 0, 1f);
-    public static Color ColorWO1 = new Color(255f, 0, 0, 1f);
+    public static Color ColorWONone = new Color(0, 0, 1f, 1f);
+    public static Color ColorWO1 = new Color(1f, 0, 0, 1f);
+    public static float WO1Alpha = 127f;
 
     public static int RangeSight = 64;
 

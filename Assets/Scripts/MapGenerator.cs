@@ -33,12 +33,15 @@ public class MapGenerator : MonoBehaviour {
             Player.GetComponent<ResetToStart>().Reset();
             vMM.ClearVisitedTex();
             wOM.ClearWOTex();
+            wOM.RemoveAllWO();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3)) {
             print("loading a map");
             SaveToImage.SaveImage(Steganography.RecoverImage(Data.PathCombined, Data.ScreenShotWidth, Data.ScreenShotHeight, Data.BitsHidden, Data.HeightMapWidth, Data.HeightMapHeight), Data.PathRecovered);
             LoadHeightmapFromFile(Data.PathRecovered);
+            wOM.RemoveAllWO();
+            wOM.LoadWOFromFile(Data.PathRecovered);
             Player.GetComponent<ResetToStart>().Reset();
             vMM.ClearVisitedTex();
         }
